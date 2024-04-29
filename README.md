@@ -23,7 +23,7 @@ Coming soon!
 - [Use API to get jokes](/actions/api-jokes)
 - [Automate browser to make Google searches](/actions/browser-google)
 - [Read data from a local Excel file, and write data back](/actions/excel-local)
-- [Expose Postgres database queries to AI app](/database-postgres/)
+- [Expose Postgres database queries to AI app](/actions/database-postgres/)
 
 ## How to Contribute
 
