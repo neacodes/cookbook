@@ -19,8 +19,9 @@ def validate(user_question: str, proposed_answer: str) -> str:
         str: Suggested modifications to the proposed answer
     """
 
+    # TODO: move to use secrets properly
     client = anthropic.Anthropic(
-        api_key="EDIT_THIS",
+        api_key="YOUR-KEY",
     )
 
     message = client.messages.create(
