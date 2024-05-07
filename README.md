@@ -41,7 +41,7 @@ New to Sema4.ai? No problem! We've got you covered with some helpful resources t
 Head over to our main [repo](https://github.com/Sema4AI/actions), and remember to leave a ⭐️.
 
 ## Need Help?
-Questions? Hurdles? Ideas? Reach out by opening an issue, or join our [community discussions](https://github.com/robocorp/robocorp/discussions). We're here to support each other in this exciting AI adventure!
+Questions? Hurdles? Ideas? Reach out by opening an [issue](https://github.com/Sema4AI/cookbook/issues) in this repo. We're here to support each other in this exciting AI adventure!
 
 ## Acknowledgments
 A heartfelt thank you to all the trailblazers and supporters in our community. Your contributions, big or small, are the secret ingredients that make this cookbook sizzle!

@@ -23,7 +23,7 @@ def read_local_files() -> str:
     # ------------
     # CHANGE THIS! Update the below folder to be something on the machine you run the Action Server on.
     # ------------
-    path = "/Users/WHOAREYOU/Desktop/available_to_ai/"
+    path = "/Users/tommi/Desktop/available_to_ai/"
     file_system = FileSystem()
     pdf_reader = PDF()
     all_content = ""
