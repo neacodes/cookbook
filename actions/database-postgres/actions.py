@@ -4,18 +4,17 @@ AI Actions for dvdrental PostgreSQL database queries.
 
 import psycopg2
 from sema4ai.actions import action
-from robocorp import vault
+
 
 def _connect():
     # Use some .env or vault rather than adding your password here.
     params = {
-        'database': 'dvdrental',
-        'user': 'postgres',
-        'password': 'SOMEPASSWD',
-        'host': 'localhost',
-        'port': '5432'
+        "database": "dvdrental",
+        "user": "postgres",
+        "password": "SOMEPASSWD",
+        "host": "localhost",
+        "port": "5432",
     }
-    pwd = vault.get_secret("my-postgres-passwd")
 
     return psycopg2.connect(**params)
 
@@ -127,7 +126,9 @@ def availability_in_stores(movie_title: str) -> str:
     rows = cur.fetchall()
     output = []
     for row in rows:
-        output.append(f"Store ID: {row[0]}, Address: {row[1]}, {row[2]}, {row[3]}, {row[4]}")
+        output.append(
+            f"Store ID: {row[0]}, Address: {row[1]}, {row[2]}, {row[3]}, {row[4]}"
+        )
 
     output_str = "\n".join(output)
     print(output_str)

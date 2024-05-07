@@ -1,6 +1,6 @@
 # Example: Actions - Make queries to Postgres database
 
-This example gets you started in creating Actions for [Robocorp Action Server](https://github.com/robocorp/robo/tree/master/action_server/docs#readme).
+This example gets you started in creating Actions for [Sema4.ai Action Server](https://github.com/Sema4AI/actions).
 
 `Actions` and `Action Server` enable you to "give your AI Agents hands" meaning that your AI/LLM Agent can help your users perform distinct actions that get executed based on the LLM discussion.
 
@@ -18,7 +18,7 @@ Actions 1-3 are configured to be `is_consequential=False`, which means that when
 
 ## Quickstart
 
-👉 Follow the Action Server [Quickstart guide](https://github.com/robocorp/robocorp?tab=readme-ov-file#%EF%B8%8F-quickstart) in the main repository.
+👉 Follow the Action Server [Quickstart guide](https://github.com/Sema4AI/actions?tab=readme-ov-file#%EF%B8%8F-quickstart) in the main repository.
 
 👉 Set up your local Postgres server and set it up with the [DVD Rental example data](https://www.postgresqltutorial.com/postgresql-getting-started/postgresql-sample-database/). Follow the instructions from the given site.
 
@@ -27,7 +27,7 @@ Actions 1-3 are configured to be `is_consequential=False`, which means that when
 
 We recommend placing your dependencies in [conda.yaml](conda.yaml).
 
-👉 More on [managing your dependencies](https://github.com/robocorp/robocorp?tab=readme-ov-file#what-makes-a-python-function-an-%EF%B8%8Faction) in the main repository.
+👉 More on [managing your dependencies](https://github.com/Sema4AI/actions?tab=readme-ov-file#what-makes-a-python-function-an-%EF%B8%8Faction) in the main repository.
 
 
 ## Actions in VS Code
