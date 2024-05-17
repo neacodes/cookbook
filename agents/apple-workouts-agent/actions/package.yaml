@@ -1,0 +1,39 @@
+
+# Required: A short name for the action package
+name: Apple Health Workouts
+
+# Required: A description of what's in the action package.
+description: Actions that provide flexible, powerful querying of Apple Health workout and metrics. 
+
+# Required: A link to where the documentation on the package lives.
+documentation: https://github.com/<path to your markdown>/README.md
+
+dependencies:
+  conda-forge:
+  - python=3.10.14
+  - uv=0.1.41
+  pypi:
+  - sema4ai-actions=0.5.0
+  - psycopg2-binary=2.9.9
+  - pytz=2024.1
+  - pymongo=3.10
+  - boto3
+  - dnspython
+  - pydantic=2.6.4
+  - rpaframework=28.5.1
+  - pytest
+
+packaging:
+  # This section is optional.
+  # By default all files and folders in this directory are packaged when uploaded.
+  # Add exclusion rules below (expects glob format: https://docs.python.org/3/library/glob.html)
+  exclude:
+    - ./.git/**
+    - ./.vscode/**
+    - ./devdata/**
+    - ./output/**
+    - ./.DS_store/**
+    - ./venv/**
+    - ./.venv/**
+    - ./**/*.pyc
+    - ./**/*.zip
