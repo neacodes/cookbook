@@ -1,0 +1,60 @@
+from json import load
+import os
+from dotenv import load_dotenv  
+from env_enum import EnvKeys
+
+load_dotenv()
+
+prod_env = {    
+    EnvKeys.S3_BUCKET_NAME.value: os.getenv('PROD_S3_BUCKET_NAME'),
+    EnvKeys.S3_METRICS_LANDING_ZONE.value: os.getenv('PROD_S3_METRICS_LANDING_ZONE'),
+    EnvKeys.S3_METRICS_PROCESSED_ZONE.value: os.getenv('PROD_S3_METRICS_PROCESSED_ZONE'),
+    EnvKeys.S3_WORKOUT_LANDING_ZONE.value: os.getenv('PROD_S3_WORKOUT_LANDING_ZONE'),
+    EnvKeys.S3_WORKOUT_PROCESSED_ZONE.value: os.getenv('PROD_S3_WORKOUT_PROCESSED_ZONE'),
+    EnvKeys.LOCAL_LANDING_ZONE_WORKOUTS_DIR.value: os.getenv('PROD_LANDING_ZONE_WORKOUTS_DIR'),
+    EnvKeys.LOCAL_LANDING_ZONE_METRICS_DIR.value: os.getenv('PROD_LANDING_ZONE_METRICS_DIR'),
+    EnvKeys.LOCAL_PROCESSED_ZONE_WORKOUTS_DIR.value: os.getenv('PROD_PROCESSED_ZONE_WORKOUTS_DIR'),
+    EnvKeys.LOCAL_PROCESSED_ZONE_METRICS_DIR.value: os.getenv('PROD_PROCESSED_ZONE_METRICS_DIR'),
+    EnvKeys.LOCAL_DUPICATES_ZONE_WORKOUTS_DIR.value: os.getenv('PROD_DUPLICATES_ZONE_WORKOUTS_DIR'),
+    EnvKeys.LOCAL_DUPICATES_ZONE_METRICS_DIR.value: os.getenv('PROD_DUPLICATES_ZONE_METRICS_DIR'),
+    EnvKeys.LOCAL_ERRORS_ZONE_WORKOUTS_DIR.value: os.getenv('PROD_ERRORS_ZONE_WORKOUTS_DIR'),
+    EnvKeys.LOCAL_ERRORS_ZONE_METRICS_DIR.value: os.getenv('PROD_ERRORS_ZONE_METRICS_DIR'),
+    EnvKeys.INCREMENTAL_S3_BASE_DIR.value: os.getenv('PROD_INCREMENTAL_S3_EXTRACT_BASE_DIR'),
+    EnvKeys.MONGO_USER.value: os.getenv("MONGO_USER"),
+    EnvKeys.MONGO_PASSWORD.value: os.getenv('MONGO_PASSWORD'),
+    EnvKeys.MONGO_HOST.value: os.getenv('MONGO_HOST'),
+    EnvKeys.MONGO_DB_NAME.value: os.getenv('MONGO_DB_NAME'),
+    EnvKeys.FHIR_ZONE.value: os.getenv('PROD_FHIR_ZONE'),
+    EnvKeys.SOURCE_DIRECTORY_FOR_FHIR.value: os.getenv('PROD_SOURCE_FHIR_DIR'),
+
+}
+
+
+
+
+test_env = {
+    EnvKeys.S3_BUCKET_NAME.value: os.getenv('TEST_S3_BUCKET_NAME'),
+    EnvKeys.S3_METRICS_LANDING_ZONE.value: os.getenv('TEST_S3_METRICS_LANDING_ZONE'),
+    EnvKeys.S3_METRICS_PROCESSED_ZONE.value: os.getenv('TEST_S3_METRICS_PROCESSED_ZONE'),
+    EnvKeys.S3_WORKOUT_LANDING_ZONE.value: os.getenv('TEST_S3_WORKOUT_LANDING_ZONE'),
+    EnvKeys.S3_WORKOUT_PROCESSED_ZONE.value: os.getenv('TEST_S3_WORKOUT_PROCESSED_ZONE'),
+    EnvKeys.LOCAL_LANDING_ZONE_WORKOUTS_DIR.value: os.getenv('TEST_LANDING_ZONE_WORKOUTS_DIR'),
+    EnvKeys.LOCAL_LANDING_ZONE_METRICS_DIR.value: os.getenv('TEST_LANDING_ZONE_METRICS_DIR'),
+    EnvKeys.INCREMENTAL_S3_BASE_DIR.value: os.getenv('TEST_INCREMENTAL_S3_EXTRACT_BASE_DIR'),
+    EnvKeys.MONGO_USER.value: os.getenv("MONGO_USER_TEST"),
+    EnvKeys.MONGO_PASSWORD.value: os.getenv('MONGO_PASSWORD_TEST'),
+    EnvKeys.MONGO_HOST.value: os.getenv('MONGO_HOST_TEST'),
+    EnvKeys.MONGO_DB_NAME.value: os.getenv('MONGO_DB_NAME_TEST'),
+    EnvKeys.FHIR_ZONE.value: os.getenv('TEST_FHIR_ZONE'),
+    EnvKeys.SOURCE_DIRECTORY_FOR_FHIR.value: os.getenv('TEST_SOURCE_FHIR_DIR'),
+    EnvKeys.SOURCE_DIRECTORY_FOR_WORKOUTS.value:  os.getenv('TEST_SOURCE_WORKOUTS_DIR'),
+    EnvKeys.PROCESSED_ZONE_FOR_WORKOUTS.value: os.getenv('TEST_PROCESSED_ZONE_WORKOUTS_DIR'),
+    EnvKeys.DUPLICATES_ZONE_FOR_WORKOUTS.value: os.getenv('TEST_DUPLICATES_ZONE_WORKOUTS_DIR'),
+    EnvKeys.ERRORS_ZONE_FOR_WORKOUTS.value: os.getenv('TEST_ERRORS_ZONE_WORKOUTS_DIR'),
+    EnvKeys.SOURCE_DIRECTORY_FOR_HEALTH_METRICS.value: os.getenv('TEST_SOURCE_METRICS_DIR'),
+    EnvKeys.PROCESSED_ZONE_FOR_HEALTH_METRICS.value: os.getenv('TEST_PROCESSED_ZONE_METRICS_DIR'),
+    EnvKeys.DUPLICATES_ZONE_FOR_HEALTH_METRICS.value: os.getenv('TEST_DUPLICATES_ZONE_METRICS_DIR'),
+    EnvKeys.ERRORS_ZONE_FOR_HEALTH_METRICS.value: os.getenv('TEST_ERRORS_ZONE_METRICS_DIR')
+}
+    
+

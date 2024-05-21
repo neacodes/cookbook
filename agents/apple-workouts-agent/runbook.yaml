@@ -1,0 +1,15 @@
+name: apple-health-workouts-agent
+description: prompts/description_prompt.md 
+instructions: prompts/instructions_prompt.md (or point to hubs: e.g: https://smith.langchain.com//srikanth-kattamuri/health_care_prompt)
+
+llm_model: 
+  - provider: OpenAI
+    model: GPT-3.5-turbo
+    version: 1.0
+    api_key: $OPENAI_API_KEY  
+
+actions: 
+  gallery:
+    - semaai/google-sheet=1.3
+  custom:
+    - action/apple-health-workouts=1.0
