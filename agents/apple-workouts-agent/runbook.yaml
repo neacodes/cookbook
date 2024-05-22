@@ -1,5 +1,6 @@
-name: ./runbook/description_final_prompt.md
+name: Apple Workouts Agent
 description: ./runbook/description_final_prompt.md
+runbook: ./runbook/runbook_final_prompt.md
 llm_model:
   provider: OpenAI
   model: GPT-4 Turbo
@@ -19,28 +20,8 @@ actions:
     description: ./runbook/description_final_prompt.md#get_core_workout_performance
   - name: load_new_workout_data_from_apple_health
     description: ./runbook/description_final_prompt.md#load_new_workout_data_from_apple_health
-metrics:
-  - name: distance
-    unit: miles
-  - name: duration
-    unit: minutes
-  - name: heartRate
-    unit: bpm
-  - name: heartRateRecovery
-    unit: bpm reduction
-  - name: calorie
-    unit: calories
-aggregation_types:
-  - sum
-  - average
-  - max
-  - min
-  - count
-dependencies:
-  - ./package.yaml
-last_updated: '2024-05-21'
-license: Apache License 2.0
 tags:
-  - Atlassian
-  - Confluence
-  - Python
+  - Healthcare
+  - Apple Health
+  - MongoDB
+  - S3
