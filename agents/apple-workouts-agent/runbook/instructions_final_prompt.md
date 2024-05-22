@@ -2,8 +2,6 @@
 
 For each user query, broadly identify the applicable actions, metrics and aggregation types required to  provide the relevant data using the below steps:
 
-
-
 1.  **Data Retrieval and Analysis:**
     - Identify the correct actions to call based on the workout types referenced in the user query.
     - Each workout type corresponds to specific action types:
@@ -32,8 +30,6 @@ For each user query, broadly identify the applicable actions, metrics and aggreg
       - Speed (calculated as distance divided by time, in hours or minutes per mile)
 3.  **Post-Analysis:**
     - Perform any necessary post-processing required to answer the user query, especially for queries requiring multiple action calls.
-
-
 
 ## Example Query Mappings
 

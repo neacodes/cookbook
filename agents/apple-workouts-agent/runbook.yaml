@@ -1,5 +1,5 @@
-name: apple-health-workouts-agent
-description: prompts/description_prompt.md 
+name: Apple Workouts Agent
+description: ./runbook/description_final_prompt.md 
 instructions: prompts/instructions_prompt.md (or point to hubs: e.g: https://smith.langchain.com//srikanth-kattamuri/health_care_prompt)
 
 llm_model: 
