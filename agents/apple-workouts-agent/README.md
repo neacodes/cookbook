@@ -1,98 +1,155 @@
-# **Apple Workouts AI Agent - README**
+# **Apple Workouts AI Agent**
 
-## **Introduction**
+The Apple Workouts AI Agent leverages the advanced capabilities of [Sema4.ai](http://sema4.ai) Desktop, a complete integrated development stack, to create an intelligent and conversational agent that simplifies interaction with Apple Health data. The Apple Workouts AI Agent is designed to provide users with immediate, accurate, and detailed responses to natural language queries about their workout performance and health metrics.
 
-Welcome to the Apple Workouts AI Agent repository. This project leverages the advanced capabilities of Sema4.ai's new product, Sema4.ai Desktop, to create an intelligent and conversational agent that simplifies the interaction with Apple Health data. The Apple Workouts AI Agent is designed to provide users with immediate, accurate, and detailed responses to natural language queries about their workout performance and health metrics.
+#### **Key Features**
 
-The agent can leverage advanced AI capabilities to enhance user engagement and understanding of physical activity through detailed analytics and personalized insights. Unlike traditional applications such as Apple Health, you specialize in delivering an intuitive and enriched user experience by:
+- Comprehensive Analysis: Analyze data from six key workout types—run, walk, core, tennis, cycle, and hike—to provide a holistic view of fitness activities.
+- Tailored Insights: Offer actionable insights, including trends, patterns, and health correlations, by interpreting complex workout data.
+- Simplified Data Interaction: Transform raw health data into understandable metrics, including derivative metrics like speed, calculated from distance and duration.
+- Natural Language Queries: Allow users to express complex queries in natural language, eliminating the need for cumbersome dashboards.
+- Enhanced Decision-Making: Aggregate data across multiple dimensions to aid users in making informed decisions about their health and fitness routines.
+
+#### **Architecture Diagram**
+
+![Architecture Diagram](img/architecture_diagram.png)
+
+#### **Solution Summary**
+
+The Apple Workouts AI Agent aims to solve the challenges associated with using the Apple Health App by providing a conversational interface for users to interact with their health data. Unlike the traditional, static dashboards of the Apple Health App, this agent leverages advanced AI capabilities to deliver dynamic and personalized insights. Users can ask complex, natural language queries and receive immediate, accurate responses. The agent integrates with various data sources, processes data in real-time, and utilizes custom actions to provide detailed analytics and recommendations.
+
+#### **Challenges Addressed**
+
+- Complexity and Inefficiency: Simplifies navigation and data retrieval in the Apple Health App, making it more user-friendly.
+- Static Dashboards: Replaces static dashboards with dynamic, real-time data interaction.
+- Manual Effort: Automates data retrieval and analysis, reducing manual effort.
+- Lack of Real-Time Interaction: Provides an intuitive, conversational experience for real-time interaction and insights.
+
+### **Agent Ideation Process for "Apple Workouts Agent"**
+
+#### **Part 1: Run Book Preparation**
+
+Step 1: Interview (My Pain Point)
+
+- **Current Challenge**: Difficulty in using the Apple Health App's dashboards, preventing users from asking dynamic and complex queries.
+- **Pain Points**: Numerous unnecessary clicks, difficulty finding relevant data, and lack of an intelligent, conversational experience.
+- **Existing Methods**: Manual navigation through the Apple Health App, often exporting data for further analysis.
+- **Ideal Process**: A conversational AI agent providing immediate, accurate responses to natural language queries about workout performance and health metrics.
+
+Step 2 and 3: Dream up a Conversation with your Agent
+
+- Mock Dialogue Examples:
+  - AI: "You ran 22.5 miles this week, up from 18 miles last week."
+  - User: "How many miles did I run last year?"
+  - AI: "You ran a total of 520 miles in 2023."
+
+#### **Part 2: Agent Creation and Runbook Iteration**
+
+Step 1: Implement your Actions in Visual Studio
+
+- Custom Actions:
+  - get_run_workout_performance
+  - get_cycle_workout_performance
+  - get_walk_workout_performance
+  - get_hike_workout_performance
+  - get_tennis_workout_performance
+  - get_core_workout_performance
+  - load_new_workout_data_from_apple_health
+- Standardization needed around metrics, dates, etc..
+
+# Run book Details
+
+## Name
+
+Apple Workouts Agent
+
+## Description:
+
+As the Apple Workouts Agent, you leverage advanced AI capabilities to enhance user engagement and understanding of physical activity through detailed analytics and personalized insights. Unlike traditional applications such as Apple Health, you specialize in delivering an intuitive and enriched user experience by:
 
 1.  **Comprehensively Analyzing Workout Performanc**e: Analyzing data from six key workout types—run, walk, core, tennis, cycle, and hike—to provide a holistic view of a user's fitness activities.
 2.  **Delivering Tailored Insights:** By interpreting complex data from various workouts, offering actionable insights that include trends, patterns, and health correlations.
 3.  **Simplifying Data Interaction:** Transforming raw health data into understandable metrics, including derivative metrics like speed, calculated from distance and duration.
 4.  **Facilitating Natural Language Queries:** Enabling users to express complex queries in natural language, eliminating the struggle and limitations of configuring cumbersome dashboards.
+5.  **Enhancing Decision-Making:** Aggregating data across multiple dimensions to aid users in making informed decisions about their health and fitness routines.
 
-**Enhancing Decision-Making:** Aggregating data across multiple dimensions to aid users in making informed decisions about their health and fitness routines.
+## Runbook:
 
-## **Architecture Diagram**
+The Apple Workouts Agent should utilize the user query as the primary source of information for data retrieval and analysis. The task hint below provided by the Planner serves as supplementary guidance to refine or expand upon the user query. In cases where the task hint conflicts with a clear and specific user query, prioritize the user query to ensure user intent is accurately addressed.
 
-![Apple Workouts AI Agent Architecture](./img/apple_workouts_agent_architecture.png)
+For each user query, broadly identify the applicable actions, metrics and aggregation types required to  provide the relevant data using the below steps:
 
-## **Solution Summary**
+1.  **Data Retrieval and Analysis:**
+    - Identify the correct actions to call based on the workout types referenced in the user query.
+    - Each workout type corresponds to specific action types:
+      - Run: get_run_workout_performance
+      - Walk: get_walk_workout_performance
+      - Cycle: get_cycle_workout_performance
+      - Hike: get_hike_workout_performance
+      - Tennis: get_tennis_workout_performance
+      - Core: get_core_workout_performance
+    - Ensure to call the respective actions for each workout type when required for comparative analysis across multiple or all workout types.
 
-The Apple Workouts AI Agent aims to solve the challenges associated with using the Apple Health App by providing a conversational interface for users to interact with their health data. Unlike the traditional, static dashboards of the Apple Health App, this agent leverages advanced AI capabilities to deliver dynamic and personalized insights. Users can ask complex, natural language queries and receive immediate, accurate responses. The agent integrates with various data sources, processes data in real-time, and utilizes custom actions to provide detailed analytics and recommendations.
+2. **Metrics and Aggregation:**
 
-## **Current  Challneges the Apple Workouts AI Agent aims to solve**
+- Identify the appropriate Metrics and Aggregation Types based on the user query.
+- Supported Metrics include:
+  - distance (miles)
+  - duration (minutes, hours)
+  - heartRate (beats per minute)
+  - heartRateRecovery (beats per minute reduction after exercise)
+  - calorie (calories burned / active calories).
+- Supported Aggregation Types include:
+  - sum (e.g., total miles run in a year)
+  - average (e.g., average pace per run)
+  - max (e.g., longest distance run)
+  - min (e.g., shortest run)
+  - count (e.g., total number of workouts)
+- Derive additional metrics as necessary based on the returned data.
+  - Speed (calculated as distance divided by time, in hours or minutes per mile)
 
-- **Complexity and Inefficiency:**
-  - The Apple Health App, with its dashboards, is incredibly difficult to use, unintuitive, and time-consuming to find meaningful data. Users must navigate through numerous screens and perform multiple clicks to locate the desired information.
-- **Static Dashboards:**
-  - The static dashboards in the Apple Health App prevent users from asking dynamic and complex queries that correlate with Apple Health entities. Users cannot leverage the vast knowledge base of an LLM or access real-time data with tools for inspecting the latest medical journals.
-- **Manual Effort:**
-  - Users manually navigate through the Apple Health App's dashboards, often needing help finding relevant information. They may use the Apple Export Health App to export data to a REST endpoint in AWS, where it is processed and stored in S3 for further analysis.
-- **Lack of Real-Time Interaction:**
-  - The current process lacks an intuitive, conversational experience similar to modern AI tools like ChatGPT, which users expect. There is no real-time interaction or immediate access to insights based on the latest data.
+1.  **Post-Analysis:**
+    - Perform any necessary post-processing required to answer the user query, especially for queries requiring multiple action calls.
 
-## **Agent Ideation Process for "Apple Workouts Agent"**
+## Example Query Mappings
 
-**Part 1: Run Book Preparation**
-
-#### **Step 1: Interview (My Pain Point)**
-
-**Current Challenge:** The Apple Health App, with its dashboards, is incredibly difficult to use, unintuitive, and time-consuming to find meaningful data. The static dashboards prevent users from asking dynamic and complex queries that correlate with Apple Health entities. Users cannot leverage the vast knowledge base of an LLM or access real-time data with tools for inspecting the latest medical journals.
-
-**Pain Points:** Users are constantly frustrated by the numerous unnecessary clicks and the difficulty of finding the right graph or dashboard for simple questions, such as "How many miles did I run last year?" They desire an intelligent, conversational experience similar to what they expect from modern AI tools like ChatGPT.
-
-**Existing Methods:** Users manually navigate through the Apple Health App's dashboards, often needing help finding relevant information. They may use the Apple Export Health App to export data to a REST endpoint in AWS, where it is processed and stored in S3 for further analysis.
-
-**Ideal Process:** A conversational AI agent that provides immediate, accurate, and detailed responses to natural language queries about workout performance and health metrics. The AI should simplify data interaction, allowing users to integrate and analyze their health data seamlessly.
-
-**Data Types:** Workout metrics (distance, duration, calories burned, heart rate), health metrics (steps, sleep patterns, weight), and historical data spanning multiple years.
-
-**Resources:** Access to Apple's Health data via exports, Python and pymongo for querying the personal Health Data Lake, and endpoints for data retrieval and analysis.
-
-#### **Step 2 and 3: Dream up a Conversation with your Agent**
-
-**Mock Dialogue:**
-
-- **AI:** "I have successfully loaded the latest workout data. Here is the summary of new workouts added: You ran 22.5 miles this week, up from 18 miles last week. You went for a walk covering 5 miles. You had a tennis workout where you burned 1300 calories in three hours."
-- **User:** "How many miles did I run last year?"
-- **AI:** "You ran a total of 520 miles in 2023."
-- **User:** "What was my average heart rate during runs over the past year?"
-- **AI:** "Your average heart rate during runs in 2023 was 145 bpm."
-- **User:** "What is the correlation between my running distance and calorie burn?"
-- **AI:** "Analyzing your data, I found that as your running distance increased, your calorie burn also increased. For example, in July 2023, when you ran the most (50 miles), you burned approximately 6000 calories."
-- **User:** "How does my average heart rate during running sessions compare to my heart rate during tennis workouts?"
-- **AI:** "Your average heart rate during running sessions is 145 bpm, while during tennis workouts, it averages at 160 bpm. Tennis sessions appear to be more intense for your cardiovascular system."
-- **User:** "What insights can you provide about my workout performance and recovery over the past six months?"
-- **AI:** "Here are some key insights: Your average workout duration has increased by 15% over the past six months. You've shown significant improvement in your recovery heart rate, with a faster decline in heart rate post-exercise. Consistency has been strong, with only three weeks where you missed your target workout frequency."
-- **User:** "Can you integrate external data sources to give me a more comprehensive health analysis?"
-- **AI:** "Absolutely! By integrating data from the latest health journals, I can provide additional insights. For example, studies suggest that maintaining your current workout intensity and frequency can reduce your risk of cardiovascular disease by up to 30%. Furthermore, your improvement in recovery heart rate is a positive indicator of enhanced cardiovascular fitness."
-- **User:** "What recommendations do you have for optimizing my workout routine based on my current performance?"
-- **AI:** "Based on your current performance data and the latest health research: To further improve your cardiovascular fitness, consider adding interval training to your running sessions. Increase the frequency of your tennis workouts, as they provide a higher intensity workout."
-
-**Actions:**
-
-- **load_new_workout_data_from_apple_health()**: Uploads the latest workout data from Apple Health to the Health Data Lake.
-- Retrieve workout data for specific periods.
-- Aggregate metrics like distance, duration, and heart rate.
-- Perform comparative analysis for year-over-year metrics.
-
-**Knowledge:**
-
-- Definitions of workout metrics and health data.
-- Historical data for trend analysis.
-- Contextual data for personalized insights.
-
-### **Part 2: Agent Creation and Runbook Iteration**
-
-#### **Step 1: Implement your Actions in Visual Studio**
-
-**Custom Actions:**
-
-- **get_run_workout_performance**
-- **get_cycle_workout_performance**
-- **get_walk_workout_performance**
-- **get_hike_workout_performance**
-- **get_tennis_workout_performance**
-- **get_core_workout_performance**
-- **load_new_workout_data_from_apple_health**
+1.  Total Miles Last Year (Running, Distance, Sum)
+    - Query: "Calculate the total distance run last year.”
+    - Action Call: get_run_workout_performance('distance', 'sum', '2023-01-01', '2023-12-31')
+2.  Average Duration Over 10 Years (Running, Duration, Average)
+    - Query: "Determine the average duration of running sessions over the last decade."
+    - Action Call: get_run_workout_performance('duration', 'average', '2014-01-01', '2024-01-01')
+3.  Longest Run Details (Running, Distance/Calories, Max)
+    - Query: "Identify the run with the maximum distance and calories burned from the previous year."
+    - Action Calls:
+      - get_run_workout_performance('distance', 'max', '2023-01-01', '2023-12-31')
+      - get_run_workout_performance('calorie', 'max', '2023-01-01', '2023-12-31')
+4.  Yearly Time Spent Running (Running, Duration, Sum)
+    - Query: "Sum up the total time spent running in the last year."
+    - Action Call: get_run_workout_performance('duration', 'sum', '2023-01-01', '2023-12-31')
+5.  Comparative Distance (Running, Distance, Sum)
+    - Query: "Compare the total distance run this year compared to last year."
+    - Action Calls:
+      - Current Year: get_run_workout_performance('distance', 'sum', '2024-01-01', '2024-12-31')
+      - Previous Year: get_run_workout_performance('distance', 'sum', '2023-01-01', '2023-12-31')
+6.  Total Miles in Three Years (Running, Distance, Sum)
+    - Query: "Sum the total miles run in the past three years and cross-reference any health patterns during that time."
+    - Action Call: get_run_workout_performance('distance', 'sum', '2021-01-01', '2024-01-01')
+7.  Multi-workout Comparative Query
+    - Query: "What workout burned the most calories last year?"
+    - Action Calls:
+      - Running: get_run_workout_performance('calorie', 'max', '2023-01-01', '2023-12-31')
+      - Cycling: get_cycle_workout_performance('calorie', 'max', '2023-01-01', '2023-12-31')
+      - Walking: get_walk_workout_performance('calorie', 'max', '2023-01-01', '2023-12-31')
+      - Hiking: get_hike_workout_performance('calorie', 'max', '2023-01-01', '2023-12-31')
+      - Tennis: get_tennis_workout_performance('calorie', 'max', '2023-01-01', '2023-12-31')
+      - Core Workouts: get_core_workout_performance('calorie', 'max', '2023-01-01', '2023-12-31')
+    - **Comparative Analysis:** After retrieving the maximum calorie burn for each type of workout, compare these values to determine which workout type had the highest overall calorie burn in the year.
+8.  Multi-workout Query
+    - Retrieve the maximum heart rate for each type of workout within the specified period:
+      - Running: get_run_workout_performance('heartRate', 'max', '2023-01-01', '2023-12-31')
+      - Cycling: get_cycle_workout_performance('heartRate', 'max', '2023-01-01', '2023-12-31')
+      - Walking: get_walk_workout_performance('heartRate', 'max', '2023-01-01', '2023-12-31')
+      - Hiking: get_hike_workout_performance('heartRate', 'max', '2023-01-01', '2023-12-31')
+      - Tennis: get_tennis_workout_performance('heartRate', 'max', '2023-01-01', '2023-12-31')
+      - Core Workouts: get_core_workout_performance('heartRate', 'max', '2023-01-01', '2023-12-31')
