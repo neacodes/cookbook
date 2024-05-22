@@ -12,7 +12,7 @@ The Apple Workouts AI Agent leverages the advanced capabilities of [Sema4.ai](ht
 
 #### **Architecture Diagram**
 
-![Architecture Diagram](img/architecture_diagram.png)
+![Architecture Diagram](img/apple_workouts_agent_architecture.png)
 
 #### **Solution Summary**
 
