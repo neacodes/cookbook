@@ -8,3 +8,8 @@ Helps you create influencer-like tweets (or Xses?) out of blog posts and YouTube
 - Can search for videos and read Youtube video content (if subtitled) and blog posts and create tweets from them
 - Used your product descriptions for context
 - Optimize the tweet content for a givent target like get more followers, or other CTA
+
+## Actions:
+- YouTube (from Gallery)
+- Search and Browse (from Gallery)
+- [Twitter](../../actions/twitter)
