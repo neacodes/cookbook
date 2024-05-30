@@ -1,0 +1,17 @@
+name: Twitter Influencer 3000
+description: ./runbook/description.md
+runbook: ./runbook/runbook.md
+llm_model:
+  provider: OpenAI
+  model: GPT-4o
+  version: latest
+actions:
+  - name: YouTube
+  - name: Twitter
+  - name: Search and Browse
+tags:
+  - Social Media
+  - Twitter
+  - Browsing
+  - Blog
+  - YouTube
