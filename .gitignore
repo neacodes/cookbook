@@ -5,3 +5,5 @@
 /.vscode
 /*/.vscode
 /*/*/.vscode
+.idea
+__pycache__
