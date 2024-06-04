@@ -1,15 +1,27 @@
-name: apple-health-workouts-agent
-description: prompts/description_prompt.md 
-instructions: prompts/instructions_prompt.md (or point to hubs: e.g: https://smith.langchain.com//srikanth-kattamuri/health_care_prompt)
-
-llm_model: 
-  - provider: OpenAI
-    model: GPT-3.5-turbo
-    version: 1.0
-    api_key: $OPENAI_API_KEY  
-
-actions: 
-  gallery:
-    - semaai/google-sheet=1.3
-  custom:
-    - action/apple-health-workouts=1.0
+name: Apple Workouts Agent
+description: ./runbook/description_final_prompt.md
+runbook: ./runbook/runbook_final_prompt.md
+llm_model:
+  provider: OpenAI
+  model: GPT-4 Turbo
+  version: latest
+actions:
+  - name: get_run_workout_performance
+    description: ./runbook/description_final_prompt.md#get_run_workout_performance
+  - name: get_cycle_workout_performance
+    description: ./runbook/description_final_prompt.md#get_cycle_workout_performance
+  - name: get_walk_workout_performance
+    description: ./runbook/description_final_prompt.md#get_walk_workout_performance
+  - name: get_hike_workout_performance
+    description: ./runbook/description_final_prompt.md#get_hike_workout_performance
+  - name: get_tennis_workout_performance
+    description: ./runbook/description_final_prompt.md#get_tennis_workout_performance
+  - name: get_core_workout_performance
+    description: ./runbook/description_final_prompt.md#get_core_workout_performance
+  - name: load_new_workout_data_from_apple_health
+    description: ./runbook/description_final_prompt.md#load_new_workout_data_from_apple_health
+tags:
+  - Healthcare
+  - Apple Health
+  - MongoDB
+  - S3
