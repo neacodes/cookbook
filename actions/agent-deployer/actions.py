@@ -53,7 +53,7 @@ def get_mime_type(file_path: str) -> str:
     return mime_type if mime_type is not None else "application/octet-stream"
 
 
-def deploy_agent(agent: dict) -> str:
+def deploy_agent(agent: dict, action_server_tools: list[dict] | None = None) -> str:
     print(f"Deploying agent: {agent['name']}")
 
     print(f"Loading runbook/system prompt: {agent['system-prompt']}")
@@ -70,6 +70,11 @@ def deploy_agent(agent: dict) -> str:
         for t in agent["tools"]:
             print(f"Adding tool: {t}")
             tools.append({"config": {"name": t.title()}, "type": t, "name": t.title()})
+
+    if action_server_tools:
+        for tool in action_server_tools:
+            print(f"Adding action server tool: {tool}")
+            tools.append(tool)
 
     jsn = {
         "name": agent["name"],
@@ -134,8 +139,27 @@ def deploy_agent(agent: dict) -> str:
     return assistant_id, thread_id
 
 
+def create_action_server_config(action_name: str, port: int) -> dict:
+    """
+    Create the config for a tool that is a action server.
+    """
+    return {
+        "type": "action_server_by_sema4ai",
+        "name": "Action Server by Sema4.ai",
+        "description": "Run AI actions with [Sema4.ai Action Server](https://github.com/Sema4AI/actions).",
+        "config": {
+            "url": f"http://localhost:{port}",
+            "api_key": "APIKEY",
+            "name": action_name,
+            "isBundled": "false",
+        },
+    }
+
+
 @action
-def deploy_agent_to_desktop(name: str, description: str, system_prompt: str) -> str:
+def deploy_agent_to_desktop(
+    name: str, description: str, system_prompt: str, tool_names: str
+) -> str:
     """
     Deploys an agent to desktop that will use the provided system prompt as it's Runbook.
 
@@ -143,6 +167,20 @@ def deploy_agent_to_desktop(name: str, description: str, system_prompt: str) -> 
         name: The name of the agent to deploy.
         description: The description of the agent to deploy.
         system_prompt: The system prompt to use for the agent.
+        tool_names: The names of the tools to use for the agent as a JSON string representation of
+            a list of dictionaries with the example form:
+
+            ```
+            [
+                {
+                    "tool_name": "Dummy Tool",
+                    "port": 8101
+                },
+                {
+                    ...
+                }
+            ]
+            ```
 
     Returns:
         The assistant ID of the deployed agent.
@@ -152,6 +190,10 @@ def deploy_agent_to_desktop(name: str, description: str, system_prompt: str) -> 
     agent_to_deploy["name"] = name
     agent_to_deploy["description"] = description
     agent_to_deploy["system-prompt"] = system_prompt
+    tools = []
+    for tool in json.loads(tool_names):
+        tools.append(create_action_server_config(tool["name"], tool["port"]))
+    agent_to_deploy["tools"] = tools
     assistant_id, thread_id = deploy_agent(agent_to_deploy)
 
     out = {
