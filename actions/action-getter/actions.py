@@ -20,9 +20,8 @@ load_dotenv(DEVDATA / ".env")
 SEMA4_DESKTOPHOME = os.environ["SEMA4AIDESKTOP_HOME"]
 
 
-class Action(BaseModel):
+class ActionPackage(BaseModel):
     name: Annotated[str, Field(description="The name of the action.")]
-    slug_name: Annotated[str, Field(description="The slug name of the action.")]
     api_spec: Annotated[
         dict,
         Field(
@@ -32,21 +31,31 @@ class Action(BaseModel):
     ]
 
 
-class Actions(BaseModel):
+class ActionPackages(BaseModel):
     actions: Annotated[
-        list[Action],
+        list[ActionPackage],
         Field(
             description="A list of actions available on the Sema4 Desktop action servers."
         ),
     ]
 
 
-class InternalActions(BaseModel):
+class InternalActionPackages(BaseModel):
     names: Annotated[list[str], Field(description="The names of the internal actions.")]
 
 
+HARDCODED_INTERNAL_ACTIONS = InternalActionPackages(
+    names=[
+        "Sema4 Desktop Action Getter",
+        "Thread Monitor",
+        "Agent Deployer",
+        "Retreival",
+    ]
+)
+
+
 @action
-def get_actions(internal_actions: InternalActions) -> Actions:
+def get_actions(internal_actions: InternalActionPackages) -> ActionPackages:
     """
     Retrieve available actions from the Sema4 Desktop action servers. The returned actions will
     include their names, descriptns and full OpenAI tool specification. You can exclude
@@ -65,11 +74,12 @@ def get_actions(internal_actions: InternalActions) -> Actions:
         action_path = action_mapping["path"]
         with open(f"{action_path}/metadata.json") as f:
             api_spec = json.loads(f.read())
+        if action_mapping["name"] in internal_actions.names:
+            continue
         actions.append(
-            Action(
+            ActionPackage(
                 name=action_mapping["name"],
-                slug_name=action_mapping["slugName"],
                 api_spec=api_spec,
             )
         )
-    return Actions(actions=actions)
+    return ActionPackages(actions=actions)
