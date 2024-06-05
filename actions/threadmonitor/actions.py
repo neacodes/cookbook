@@ -114,10 +114,11 @@ def update_agent_runbook(assistant_id: str, new_runbook: str) -> str:
     resp = requests.get(f'http://127.0.0.1:8100/assistants/{assistant_id}')
 
     name = resp.json()['name']
-    prompt = f"You are an assistant with the following name: {name}.\nThe current date and time is: ${{CURRENT_DATETIME}}.\nYour instructions are:\n{new_runbook}"
+    #prompt = f"You are an assistant with the following name: {name}.\nThe current date and time is: ${{CURRENT_DATETIME}}.\nYour instructions are:\n{new_runbook}"
     public = resp.json()['public']
     config = resp.json()['config']
-    config['configurable']['type==agent/system_message'] = prompt
+    # print(config)
+    config['configurable']['type==agent/system_message'] = new_runbook
 
     payload = {
         "name": name,
