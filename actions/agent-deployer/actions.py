@@ -69,7 +69,7 @@ def deploy_agent(agent: dict) -> str:
     if "tools" in agent:
         for t in agent["tools"]:
             print(f"Adding tool: {t}")
-            tools.append({"config": {"name": t.title()}, "type": t})
+            tools.append({"config": {"name": t.title()}, "type": t, "name": t.title()})
 
     jsn = {
         "name": agent["name"],
@@ -89,6 +89,7 @@ def deploy_agent(agent: dict) -> str:
     resp = requests.post("http://localhost:8100/assistants", json=jsn)
     assistant = json.loads(resp.content)
     assistant_id = assistant["assistant_id"]
+    print(resp.content)
     # print(assistant)
 
     if "files" in agent:
@@ -119,9 +120,18 @@ def deploy_agent(agent: dict) -> str:
                 data=config,
                 headers={"accept": "application/json"},
             )
-            # print(response.content)
+            print(response.content)
 
-    return assistant_id
+    jsn = {
+        "name": "Welcome",
+        "assistant_id": assistant_id,
+        "starting_message": "Hi! How can I help you with today?",
+    }
+    resp = requests.post("http://localhost:8100/threads", json=jsn)
+    print(resp.content)
+    thread_id = json.loads(resp.content)["thread_id"]
+
+    return assistant_id, thread_id
 
 
 @action
@@ -142,4 +152,10 @@ def deploy_agent_to_desktop(name: str, description: str, system_prompt: str) -> 
     agent_to_deploy["name"] = name
     agent_to_deploy["description"] = description
     agent_to_deploy["system-prompt"] = system_prompt
-    return deploy_agent(agent_to_deploy)
+    assistant_id, thread_id = deploy_agent(agent_to_deploy)
+
+    out = {
+        "assistant_id": assistant_id,
+        "thread_id": thread_id,
+    }
+    return repr(out)
