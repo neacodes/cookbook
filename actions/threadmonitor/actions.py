@@ -4,15 +4,16 @@ from datetime import datetime
 import json
 
 @action
-def get_latest_thread() -> str:
+def get_latest_thread(assistant_id: str) -> str:
     """
     Gets the latest thread of an agent.
+
+    Args:
+        assistant_id: Id of the assistant.
 
     Returns:
         The content of the thread.
     """
-
-    assistant_id = "8a9fba54-b3f7-4791-aa47-947d3c938775"
 
     resp = requests.get('http://127.0.0.1:8100/threads/')
     threads = resp.json()
@@ -75,3 +76,19 @@ def get_all_agents() -> str:
         agent_info += f"Name: {agent['name']}, ID: {agent['assistant_id']}\n"
 
     return f"Available agents are:\n{agent_info}"
+
+@action
+def get_agent_runbook(assistant_id: str) -> str:
+    """
+    Gets agent details.
+    
+    Args:
+        assistant_id: Id of the assistant.
+
+    Returns:
+        Assistant details.
+    """
+
+    resp = requests.get(f'http://127.0.0.1:8100/assistants/{assistant_id}')
+
+    return resp.json()['config']['configurable']['type==agent/system_message']

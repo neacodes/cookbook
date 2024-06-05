@@ -2,7 +2,7 @@
 name: Thread Monitor
 
 # Required: A description of what's in the action package.
-description: Gets threads of Agents
+description: Gets threads and runbooks of Agents
 
 # Required: A link to where the documentation on the package lives.
 documentation: https://github.com/...
