@@ -59,7 +59,7 @@ def deploy_agent(agent: dict) -> str:
     print(f"Loading runbook/system prompt: {agent['system-prompt']}")
     try:
         system_prompt = read_text_file(agent["system-prompt"])
-    except FileNotFoundError:
+    except (FileNotFoundError, OSError):
         system_prompt = agent["system-prompt"]
 
     print(f"Loading retrieval prompt: {agent['retrieval-prompt']}")
