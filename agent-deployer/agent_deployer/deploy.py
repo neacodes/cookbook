@@ -44,7 +44,7 @@ def deploy_agent(agent: dict):
     if "tools" in agent:
         for t in agent["tools"]:
             print(f"Adding tool: {t}")
-            tools.append({"config": { "name": t.title() }, "type": t})
+            tools.append({"config": { "name": t.title() }, "type": t, "name": t.title()})
 
     jsn = {
         "name": agent["name"],
@@ -64,6 +64,7 @@ def deploy_agent(agent: dict):
     resp = requests.post('http://localhost:8100/assistants', json=jsn)
     assistant = json.loads(resp.content)
     assistant_id = assistant["assistant_id"]
+    print(resp.content)
     # print(assistant)
 
     if "files" in agent:
@@ -92,8 +93,15 @@ def deploy_agent(agent: dict):
 
             response = requests.post('http://localhost:8100/ingest', files=files, data=config,
                                      headers={'accept': 'application/json'})
-            # print(response.content)
+            print(response.content)
 
+        jsn = {
+          "name" : "Welcome",
+          "assistant_id" : assistant_id,
+          "starting_message" : "Hi! How can I help you with today?"
+        }
+        resp = requests.post('http://localhost:8100/threads', json=jsn)
+        print(resp.content)
 
 
 def main():
