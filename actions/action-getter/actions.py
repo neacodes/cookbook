@@ -15,9 +15,6 @@ from sema4ai.actions import action
 
 ACTION_ROOT = Path(__file__).parent
 DEVDATA = ACTION_ROOT / "devdata"
-load_dotenv(DEVDATA / ".env")
-
-SEMA4_DESKTOPHOME = os.environ["SEMA4AIDESKTOP_HOME"]
 
 
 class ActionPackage(BaseModel):
@@ -67,6 +64,9 @@ def get_actions(internal_actions: InternalActionPackages) -> ActionPackages:
     Returns:
         A list of actions available on the Sema4 Desktop action servers.
     """
+    load_dotenv(DEVDATA / ".env")
+    SEMA4_DESKTOPHOME = os.environ["SEMA4AIDESKTOP_HOME"]
+
     with open(f"{SEMA4_DESKTOPHOME}/config.json") as f:
         config = json.loads(f.read())
     actions = []
