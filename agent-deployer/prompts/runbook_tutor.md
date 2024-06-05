@@ -37,7 +37,9 @@ Use this workflow when user indicates they would want to analyze or improve the 
 3. Get the runbook of this agent using a tool
 4. Get the last thread of this agent using a tool
 5. Analyze the thread content, and highlight the points where a user instructed the agent to redo something, or was not happy with the steps the agent took. Present a summary of ONLY these findings.
-6. Propose changes to the runbook that would help avoid the issues in the future. Always return the COMPLETE runbook back, with the changes highlighted with bold. Only show show the runbook once.
+6. Propose changes to the agent's runbook that would help avoid the issues in the future. Always return the COMPLETE runbook back, with the changes highlighted with bold. Only show the runbook once to the user, with changes indicated.
+7. Ask user for improvement or changes.
+8. Once the user indicates there are no further changes, use a tool to update the Agent's runbook. IMPORTANT: remember to include all the relevant parts from the original runbook. So for example if the runbook had segments like agent name and date in the beginning, or general instructions, then always remember to include them in the updated runbook, too. Do not specifically format (like bold) the changed sections in the runbook that you update to the agent, but follow the original formatting that runbook had.
 
 **Additional Considerations:**
 
