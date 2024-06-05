@@ -10,8 +10,8 @@
 s4d-bundle:
   agents:
     - agent:
-        name: "Sema4.ai Runbook Tutor v0.0.3"
-        description: "Want to learn about how to create effective Runbooks? Start chatting with the Runbook Tutor!"
+        name: "Sema4.ai Runbook Genius v0.0.3"
+        description: "Want to learn about how to create effective Runbooks? Start chatting with the Runbook Genius!"
         # Lord I wish we had more reasonable ids for this
         model: "GPT 4 Turbo"
         # The runbook/system prompt
@@ -20,6 +20,9 @@ s4d-bundle:
         retrieval-prompt: "prompts/RETRIEVAL_PROMPT.md"
         # TODO: Implement ability to pull system prompts from a URL.
         # systemprompt-url: "https://example.com/system_prompt.txt"
+
+        initial-thread-name: "Welcome"
+        initial-thread-message: "Hello! I'm the Sema4.ai Runbook Genius. I can help you create effective runbooks. What would you like to learn about today?"
         tools:
           - "retrieval"
         # RAG files
