@@ -2,7 +2,7 @@
 
 Runbook tutor will help you create an Agent, and optimize the runbook based on previous conversations.
 
-## Team
+## Team Algorithm Avengers
 
 - [Kylie](https://github.com/kylie-bee)
 - [Taylor](https://github.com/ptgoetz)
