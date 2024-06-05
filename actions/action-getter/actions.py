@@ -65,7 +65,8 @@ def get_actions(internal_actions: InternalActionPackages) -> ActionPackages:
         A list of actions available on the Sema4 Desktop action servers.
     """
     load_dotenv(DEVDATA / ".env")
-    SEMA4_DESKTOPHOME = os.environ["SEMA4AIDESKTOP_HOME"]
+    ROBOCORP_HOME = os.environ["ROBOCORP_HOME"]
+    SEMA4_DESKTOPHOME = f"{ROBOCORP_HOME}/sema4ai-desktop"
 
     with open(f"{SEMA4_DESKTOPHOME}/config.json") as f:
         config = json.loads(f.read())
