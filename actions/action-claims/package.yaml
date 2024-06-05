@@ -1,8 +1,8 @@
 # Required: A short name for the action package
-name: Package name
+name: Dummy Workers Compensation Claims
 
 # Required: A description of what's in the action package.
-description: Action package description
+description: Actions related to workers compensation claims.
 
 # Required: A link to where the documentation on the package lives.
 documentation: https://github.com/<path to your markdown>/README.md
