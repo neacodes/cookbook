@@ -31,4 +31,3 @@ packaging:
     - ./.DS_store/**
     - ./**/*.pyc
     - ./**/*.zip
-    - ./metadata.json
