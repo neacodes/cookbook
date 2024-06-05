@@ -96,9 +96,9 @@ def deploy_agent(agent: dict):
             print(response.content)
 
         jsn = {
-          "name" : "Welcome",
+          "name" : agent["initial-thread-name"],
           "assistant_id" : assistant_id,
-          "starting_message" : "Hi! How can I help you with today?"
+          "starting_message" : agent["initial-thread-message"],
         }
         resp = requests.post('http://localhost:8100/threads', json=jsn)
         print(resp.content)
