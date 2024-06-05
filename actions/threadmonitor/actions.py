@@ -97,3 +97,37 @@ def get_agent_runbook(assistant_id: str) -> str:
         response = "Did not find the runbook"
 
     return response
+
+@action
+def update_agent_runbook(assistant_id: str, new_runbook: str) -> str:
+    """
+    Updates a runbook of an existing agent.
+    
+    Args:
+        assistant_id: Id of the assistant.
+        new_runbook: The new runbook to be changed to the assistant. Include a COMPLETE runbook, not just the updated parts.
+
+    Returns:
+        Assistant details.
+    """
+
+    resp = requests.get(f'http://127.0.0.1:8100/assistants/{assistant_id}')
+
+    name = resp.json()['name']
+    prompt = f"You are an assistant with the following name: {name}.\nThe current date and time is: ${{CURRENT_DATETIME}}.\nYour instructions are:\n{new_runbook}"
+    public = resp.json()['public']
+    config = resp.json()['config']
+    config['configurable']['type==agent/system_message'] = prompt
+
+    payload = {
+        "name": name,
+        "config": config,
+        "public": public
+    }
+
+    response = requests.put(f'http://127.0.0.1:8100/assistants/{assistant_id}', json=payload)
+
+    if response.status_code == 200:
+        return f"Successfully updated!"
+    else:
+        return f"Failed with status code: {response.status_code}, message is {response.json()}"
