@@ -91,4 +91,9 @@ def get_agent_runbook(assistant_id: str) -> str:
 
     resp = requests.get(f'http://127.0.0.1:8100/assistants/{assistant_id}')
 
-    return resp.json()['config']['configurable']['type==agent/system_message']
+    try:
+        response = resp.json()['config']['configurable']['type==agent/system_message']
+    except:
+        response = "Did not find the runbook"
+
+    return response
