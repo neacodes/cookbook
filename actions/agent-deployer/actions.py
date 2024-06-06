@@ -53,7 +53,7 @@ def get_mime_type(file_path: str) -> str:
     return mime_type if mime_type is not None else "application/octet-stream"
 
 
-def deploy_agent(agent: dict, action_server_tools: list[dict] | None = None) -> str:
+def deploy_agent(agent: dict) -> str:
     print(f"Deploying agent: {agent['name']}")
 
     print(f"Loading runbook/system prompt: {agent['system-prompt']}")
@@ -69,12 +69,10 @@ def deploy_agent(agent: dict, action_server_tools: list[dict] | None = None) -> 
     if "tools" in agent:
         for t in agent["tools"]:
             print(f"Adding tool: {t}")
+            if isinstance(t, dict):
+                tools.append(t)
+                continue
             tools.append({"config": {"name": t.title()}, "type": t, "name": t.title()})
-
-    if action_server_tools:
-        for tool in action_server_tools:
-            print(f"Adding action server tool: {tool}")
-            tools.append(tool)
 
     jsn = {
         "name": agent["name"],
