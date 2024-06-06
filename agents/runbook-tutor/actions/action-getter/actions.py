@@ -19,6 +19,7 @@ DEVDATA = ACTION_ROOT / "devdata"
 
 class ActionPackage(BaseModel):
     name: Annotated[str, Field(description="The name of the action.")]
+    port: Annotated[int, Field(description="The port the action server is running on.")]
     api_spec: Annotated[
         dict,
         Field(
@@ -80,6 +81,7 @@ def get_actions(internal_actions: InternalActionPackages) -> ActionPackages:
         actions.append(
             ActionPackage(
                 name=action_mapping["name"],
+                port=action_mapping["actionServerPort"],
                 api_spec=api_spec,
             )
         )
