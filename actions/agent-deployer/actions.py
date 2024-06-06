@@ -174,7 +174,7 @@ def deploy_agent_to_desktop(
             [
                 {
                     "tool_name": "Dummy Tool",
-                    "port": 8101
+                    "port": port-as-int
                 },
                 {
                     ...
@@ -192,7 +192,7 @@ def deploy_agent_to_desktop(
     agent_to_deploy["system-prompt"] = system_prompt
     tools = []
     for tool in json.loads(tool_names):
-        tools.append(create_action_server_config(tool["name"], tool["port"]))
+        tools.append(create_action_server_config(tool["tool_name"], tool["port"]))
     agent_to_deploy["tools"] = tools
     assistant_id, thread_id = deploy_agent(agent_to_deploy)
 
