@@ -28,6 +28,12 @@ def _build_docs_service(credentials: OAuth2Secret) -> Resource:
     creds = Credentials(token=credentials.access_token)
     return build("docs", "v1", credentials=creds)
 
+def _get_runbook_by_name(service: Resource, name: str, folder_id: str) -> Optional[File]:
+    response = service.files().list(q=f"name = '{name}' and '{folder_id}' in parents", fields="*").execute()
+    if not response.get("files"):
+        return None
+    return File(**response["files"][0])
+
 def _get_folder_id_by_name(service: Resource, folder_name: str) -> Optional[str]:
     response = service.files().list(q=f"mimeType='application/vnd.google-apps.folder' and name='{folder_name}'", fields="files(id)").execute()
     if not response.get("files"):
@@ -261,26 +267,25 @@ def get_runbooks_by_query(
         ],
     ],
     query: str,
-    folder_name: Optional[str] = None,
+    folder_name: str
 ) -> Response[FileList]:
     """
-    Get all runbooks from Google Drive that match the given query. Optionally filter by folder name.
+    Get all runbooks from Google Drive that match the given query within a specific folder.
 
     Args:
         google_credentials: JSON containing Google OAuth2 credentials.
         query: Google Drive API V3 query string for search files in the format query_term operator values.
-        folder_name: (Optional) Name of the folder to search within.
+        folder_name: Name of the folder to search within.
 
     Returns:
         A list of runbooks or an error message if no runbooks were found.
     """
     service = _build_drive_service(google_credentials)
     try:
-        if folder_name:
-            folder_id = _get_folder_id_by_name(service, folder_name)
-            if not folder_id:
-                return Response(error=f"No folder named '{folder_name}' found")
-            query = f"{query} and '{folder_id}' in parents"
+        folder_id = _get_folder_id_by_name(service, folder_name)
+        if not folder_id:
+            return Response(error=f"No folder named '{folder_name}' found")
+        query = f"{query} and '{folder_id}' in parents"
         response = service.files().list(q=query, fields="*").execute()
         files = FileList(files=response.get("files", []))
         if not files.files:
@@ -298,28 +303,25 @@ def get_runbook_contents_by_name(
         list[Literal["https://www.googleapis.com/auth/drive.readonly"]],
     ],
     name: str,
-    folder_name: Optional[str] = None,
+    folder_name: str
 ) -> Response:
     """
-    Get the runbook contents by name. Optionally search within a specific folder.
+    Get the runbook contents by name within a specific folder.
 
     Args:
         google_credentials: JSON containing Google OAuth2 credentials.
         name: Name of the runbook.
-        folder_name: (Optional) Name of the folder to search within.
+        folder_name: Name of the folder to search within.
 
     Returns:
         The runbook contents or an error message.
     """
     service = _build_drive_service(google_credentials)
     try:
-        if folder_name:
-            folder_id = _get_folder_id_by_name(service, folder_name)
-            if not folder_id:
-                return Response(error=f"No folder named '{folder_name}' found")
-            query = f"name = '{name}' and '{folder_id}' in parents"
-        else:
-            query = f"name = '{name}'"
+        folder_id = _get_folder_id_by_name(service, folder_name)
+        if not folder_id:
+            return Response(error=f"No folder named '{folder_name}' found")
+        query = f"name = '{name}' and '{folder_id}' in parents"
         response = service.files().list(q=query, fields="*").execute()
         if not response.get("files"):
             return Response(error=f"The runbook named '{name}' could not be found")
@@ -342,17 +344,17 @@ def share_runbook(
     name: str,
     role: str,
     email_address: str,
-    folder_name: Optional[str] = None,
+    folder_name: str
 ) -> Response:
     """
-    Share a runbook with a specific email address. Optionally search within a specific folder.
+    Share a runbook with a specific email address within a specific folder.
 
     Args:
         google_credentials: JSON containing Google OAuth2 credentials.
         name: Name of the runbook to be shared.
         role: Assign a specific role. Possible options are: reader, writer, commenter, organizer, fileOrganizer.
         email_address: The email address of the user or group to share the runbook with.
-        folder_name: (Optional) Name of the folder to search within.
+        folder_name: Name of the folder to search within.
 
     Returns:
         Message indicating the success or failure of the operation.
@@ -360,15 +362,12 @@ def share_runbook(
     service = _build_drive_service(google_credentials)
     permission = {"type": "user", "role": role, "emailAddress": email_address}
     try:
-        if folder_name:
-            folder_id = _get_folder_id_by_name(service, folder_name)
-            if not folder_id:
-                return Response(error=f"No folder named '{folder_name}' found")
-            query = f"name = '{name}' and '{folder_id}' in parents"
-        else:
-            query = f"name = '{name}'"
+        folder_id = _get_folder_id_by_name(service, folder_name)
+        if not folder_id:
+            return Response(error=f"No folder named '{folder_name}' found")
+        query = f"name = '{name}' and '{folder_id}' in parents"
         response = service.files().list(q=query, fields="*").execute()
-        if not response.get("files")):
+        if not response.get("files"):
             return Response(error=f"The runbook named '{name}' could not be found")
         file = File(**response["files"][0])
         service.permissions().create(fileId=file.id, body=permission).execute()
@@ -385,20 +384,37 @@ def list_runbook_comments(
         list[Literal["https://www.googleapis.com/auth/drive.readonly"]],
     ],
     name: str,
-    folder_name: Optional[str] = None,
+    folder_name: str
 ) -> Response[CommentList]:
     """
-    List the comments on a specific runbook. Optionally search within a specific folder.
+    List the comments on a specific runbook within a specific folder.
 
     Args:
         google_credentials: JSON containing Google OAuth2 credentials.
         name: Name of the runbook to read its associated comments.
-        folder_name: (Optional) Name of the folder to search within.
+        folder_name: Name of the folder to search within.
 
     Returns:
         List of comments associated with the runbook.
     """
     service = _build_drive_service(google_credentials)
     try:
-        if folder_name:
-           
+        folder_id = _get_folder_id_by_name(service, folder_name)
+        if not folder_id:
+            return Response(error=f"No folder named '{folder_name}' found")
+        query = f"name = '{name}' and '{folder_id}' in parents"
+        response = service.files().list(q=query, fields="*").execute()
+        if not response.get("files"):
+            return Response(error=f"The runbook named '{name}' could not be found")
+        file = File(**response["files"][0])
+        comments_list = (
+            service.comments()
+            .list(fileId=file.id, fields="*")
+            .execute()
+            .get("comments", [])
+        )
+        return Response(result=CommentList(comments=comments_list))
+    except HttpError as error:
+        return Response(error=f"An error occurred: {error}")
+    finally:
+        service.close()
