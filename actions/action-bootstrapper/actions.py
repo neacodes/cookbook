@@ -25,12 +25,17 @@ def bootstrap_action_package(action_package_name: str) -> str:
 
     os.makedirs(new_action_package_path, exist_ok=True)
 
-    os.chdir(new_action_package_path)
+    cwd = os.getcwd()
+    full_action_path = ""
+    try:
+        os.chdir(new_action_package_path)
 
-    command = f"action-server new --name '{action_package_name}' --template minimal"
-    subprocess.run(command, shell=True)
+        command = f"action-server new --name '{action_package_name}' --template minimal"
+        subprocess.run(command, shell=True)
 
-    full_action_path = get_action_package_path(action_package_name)
+        full_action_path = get_action_package_path(action_package_name)
+    finally:
+        os.chdir(cwd)
 
     return f"Action successfully bootstrapped! Code available at {full_action_path}"
 
@@ -81,8 +86,10 @@ def update_action_package_dependencies(
     )
 
     package_yaml = open(package_yaml_path, "w")
-    package_yaml.write(action_package_dependencies_code)
-    package_yaml.close()
+    try:
+        package_yaml.write(action_package_dependencies_code)
+    finally:
+        package_yaml.close()
 
     return f"Successfully updated the package dependencies at: {package_yaml_path}"
 
@@ -116,7 +123,10 @@ def update_action_package_action_dev_data(
     file_path = os.path.join(dev_data_path, file_name)
 
     with open(file_path, "w") as file:
-        file.write(action_package_dev_data)
+        try:
+            file.write(action_package_dev_data)
+        finally:
+            file.close()
 
     return f"dev data for {action_package_action_name} in the action package {action_package_name} successfully created!"
 
@@ -136,6 +146,7 @@ def start_action_server(action_package_name: str, secrets: str) -> str:
 
     full_action_path = get_action_package_path(action_package_name)
 
+    cwd = os.getcwd()
     os.chdir(full_action_path)
 
     start_port = 8080
@@ -148,10 +159,11 @@ def start_action_server(action_package_name: str, secrets: str) -> str:
     env = os.environ.copy()
     env["RC_ADD_SHUTDOWN_API"] = "1"
 
-    parsed_secrets = json.loads(secrets)
-    env.update(parsed_secrets)
+    if secrets != "":
+        parsed_secrets = json.loads(secrets)
+        env.update(parsed_secrets)
 
-    subprocess.Popen(
+    res = subprocess.Popen(
         command,
         shell=True,
         stdout=subprocess.PIPE,
@@ -159,6 +171,7 @@ def start_action_server(action_package_name: str, secrets: str) -> str:
         preexec_fn=os.setsid,
         env=env,
     )
+    os.chdir(cwd)
 
     return f"http://localhost:{available_port}"
 
@@ -213,8 +226,10 @@ def update_action_code(action_package_name: str, action_code: str) -> str:
     )
 
     actions_py = open(actions_py_path, "w")
-    actions_py.write(formatted_code)
-    actions_py.close()
+    try:
+        actions_py.write(formatted_code)
+    finally:
+        actions_py.close()
 
     return f"Successfully updated the actions at {actions_py_path}"
 
