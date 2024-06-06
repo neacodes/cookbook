@@ -1,0 +1,33 @@
+# Required: A short name for the action package
+name: Sema4 Desktop Action Getter
+
+# Required: A description of what's in the action package.
+description: |
+  This action package is used by the Runbook Tutor to retrieve available actions from the Sema4 
+  Desktop action servers. The returned actions will include their names and descriptions, but will
+  exclude actions used by the Runbook Tutor itself.
+
+# Required: A link to where the documentation on the package lives.
+documentation: https://github.com/...
+
+dependencies:
+  conda-forge:
+    - python=3.10.14
+    - uv=0.2.5
+  pypi:
+    - sema4ai-actions=0.9.1
+    - python-dotenv=1.0.1
+
+packaging:
+  # By default, all files and folders in this directory are packaged when uploaded.
+  # Add exclusion rules below (expects glob format: https://docs.python.org/3/library/glob.html)
+  exclude:
+    - ./.git/**
+    - ./.vscode/**
+    - ./devdata/**
+    - ./output/**
+    - ./venv/**
+    - ./.venv/**
+    - ./.DS_store/**
+    - ./**/*.pyc
+    - ./**/*.zip
