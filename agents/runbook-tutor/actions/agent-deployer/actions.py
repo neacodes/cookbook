@@ -166,7 +166,8 @@ def deploy_agent_to_desktop(
         description: The description of the agent to deploy.
         system_prompt: The system prompt to use for the agent.
         tool_names: The names of the tools to use for the agent as a JSON string representation of
-            a list of dictionaries with the example form:
+            a list of dictionaries, see example below. The port number MUST be obtained from the
+            Action Getter tool and passed in as an integer.
 
             ```
             [
