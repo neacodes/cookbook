@@ -1,0 +1,43 @@
+# Required: A short name for the action package
+name: Agent Runbook Manager
+
+# Required: A description of what's in the action package.
+description: Actions to create, update, synchronize, share, and manage runbooks using Google Drive and Google Docs
+
+# Required: A link to where the documentation on the package lives.
+documentation: https://github.com/...
+
+dependencies:
+  conda-forge:
+  - python=3.10.14
+  - python-dotenv=1.0.1
+  - uv=0.2.4
+  pypi:
+  - sema4ai-actions=0.9.0
+  - google-api-python-client=2.127.0
+  - google-auth-oauthlib=1.2.0
+  - google-auth-httplib2=0.2.0
+  - pydantic=2.7.1
+  - pandas=2.2.2
+  - openpyxl=3.1.2
+  - markdown=3.3.6
+  - beautifulsoup4=4.10.0
+  
+
+test_dependencies:
+  conda-forge:
+    - pytest=7.1.2
+
+packaging:
+  # By default, all files and folders in this directory are packaged when uploaded.
+  # Add exclusion rules below (expects glob format: https://docs.python.org/3/library/glob.html)
+  exclude:
+    - ./.git/**
+    - ./.vscode/**
+    - ./devdata/**
+    - ./output/**
+    - ./venv/**
+    - ./.venv/**
+    - ./.DS_store/**
+    - ./**/*.pyc
+    - ./**/*.zip
