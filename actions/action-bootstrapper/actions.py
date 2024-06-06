@@ -283,6 +283,7 @@ def get_action_run_logs(action_server_url: str, run_id: str) -> str:
     return output
 
 
+@action
 def get_action_run_logs_latest(action_server_url: str) -> str:
     """
     Returns action run logs in plain text by requesting them from the
