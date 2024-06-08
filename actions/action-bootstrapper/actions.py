@@ -1,3 +1,5 @@
+import time
+
 from sema4ai.actions import action
 import os
 import urllib.parse
@@ -146,34 +148,55 @@ def start_action_server(action_package_name: str, secrets: str) -> str:
 
     full_action_path = get_action_package_path(action_package_name)
 
-    cwd = os.getcwd()
-    os.chdir(full_action_path)
+    if not os.path.exists(full_action_path):
+        return f"Action package '{full_action_path}' does not exists."
 
     start_port = 8080
     available_port = find_available_port(start_port)
 
-    start_command = f"action-server start -p {available_port}"
-
-    command = f"python3 -c 'import subprocess, os; subprocess.Popen(\"{start_command}\", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, preexec_fn=os.setsid)'"
+    start_command = f"nohup action-server start -p {available_port} > action_server.log 2>&1 &"
 
     env = os.environ.copy()
     env["RC_ADD_SHUTDOWN_API"] = "1"
 
-    if secrets != "":
+    if secrets.strip() != "":
         parsed_secrets = json.loads(secrets)
         env.update(parsed_secrets)
 
-    res = subprocess.Popen(
-        command,
+    subprocess.Popen(
+        start_command,
         shell=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
         preexec_fn=os.setsid,
         env=env,
+        cwd=full_action_path
     )
-    os.chdir(cwd)
 
-    return f"http://localhost:{available_port}"
+    timeout = 60
+    start_time = time.time()
+    url = f"http://localhost:{available_port}"
+
+    time.sleep(1.0)
+    with open(f"{full_action_path}/action_server.log", "r") as f:
+        while True:
+            if time.time() - start_time > timeout:
+                stop_action_server(url)
+                stdout_content = ""
+                if os.path.exists(f"{full_action_path}/action_server.log"):
+                    with open(f"{full_action_path}/action_server.log", "r") as f:
+                        stdout_content = f"\n\nStdout:\n{f.read()}"
+                return f"Process timed out.{stdout_content}"
+            line = f.readline()
+            if line:
+                decoded_line = line
+                if url in decoded_line:
+                    return url
+                if "Error executing action-server" in decoded_line:
+                    stdout_content = ""
+                    if os.path.exists(f"{full_action_path}/action_server.log"):
+                        with open(f"{full_action_path}/action_server.log", "r") as f:
+                            stdout_content = f"\n\nStdout:\n{f.read()}"
+                    return f"Failed to start.{stdout_content}"
+            time.sleep(1.0)
 
 
 @action
