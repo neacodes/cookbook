@@ -1,5 +1,3 @@
-# Agent Connector
-
 In Sema4.ai Desktop, let your agents talk to each other seamlessly.
 
 ## Overview
@@ -49,4 +47,4 @@ Sends a message within a specified thread and retrieves the assistant's response
       error message if the operation fails.
 
 By using these actions, agents within the Sema4.ai platform can effectively communicate, enabling seamless collaboration
-and information exchange.
+and information exchange.In Sema4.ai Desktop let your agents talk to each other.
