@@ -27,17 +27,10 @@ def bootstrap_action_package(action_package_name: str) -> str:
 
     os.makedirs(new_action_package_path, exist_ok=True)
 
-    cwd = os.getcwd()
-    full_action_path = ""
-    try:
-        os.chdir(new_action_package_path)
+    command = f"action-server new --name '{action_package_name}' --template minimal"
+    subprocess.run(command, shell=True, cwd=new_action_package_path)
 
-        command = f"action-server new --name '{action_package_name}' --template minimal"
-        subprocess.run(command, shell=True)
-
-        full_action_path = get_action_package_path(action_package_name)
-    finally:
-        os.chdir(cwd)
+    full_action_path = get_action_package_path(action_package_name)
 
     return f"Action successfully bootstrapped! Code available at {full_action_path}"
 
