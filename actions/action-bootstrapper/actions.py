@@ -280,15 +280,36 @@ def open_action_code(action_package_name: str) -> str:
         action_package_name: Name of the action package
 
     Returns:
-        Whether the code was successfully displayed or not
+        A message indicating success or detailed error information.
     """
 
     full_action_path = get_action_package_path(action_package_name)
+
+    if not os.path.exists(full_action_path):
+        return f"Error: Action package '{action_package_name}' does not exist at path {full_action_path}."
+
     command = ["code", full_action_path]
 
-    subprocess.run(command)
+    try:
+        subprocess.run(command, check=True)
+    except subprocess.CalledProcessError as e:
+        return (
+            f"Error: Failed to open the action package '{action_package_name}' with VSCode. "
+            f"Subprocess returned non-zero exit status {e.returncode}. "
+            "Ensure VSCode is installed and the 'code' command is available in your PATH."
+        )
+    except FileNotFoundError:
+        return (
+            "Error: 'code' command not found. "
+            "Ensure VSCode is installed and the 'code' command is available in your PATH."
+        )
+    except Exception as e:
+        return (
+            f"Unexpected error: {str(e)}. "
+            "Please check your setup and try again."
+        )
 
-    return f"{action_package_name} code opened with VScode"
+    return f"{action_package_name} code opened with VSCode."
 
 
 @action
