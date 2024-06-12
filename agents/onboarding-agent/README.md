@@ -1,56 +1,16 @@
 # Onboarding Agent
 
-Action Package interacting with Google Mail (GMail) resources.
+## The Challenge ⭐️
+When a new employee joins the company, the person responsible for onboarding (HR/IT/Manager) needs to invite the employee to multiple different company accounts. It requires signing in to accounts and sending invitations one-by-one.
 
-Details on GMail query syntax: https://support.google.com/mail/answer/7190?hl=en
+## Pain Points 😤
+The manual work is acceptable if you have one employee joining per month. However, if you have multiple employees joining every single week, and you need to log into ten systems separately to invite new employees to those, the amount of manual work is getting painful.
 
-Possible actions with this package are:
+## Example of a current Process: When a new employee has signed an employment agreement, HR will:
+1. Create a Google Workspace account for a new employee
+2. Send new Gsuite account login instructions to the employee's private email
+3. Send invitations to all other company-wide accounts such as Hibob (in the future, it could be any other accounts like Zoom, Slack, Ramp, etc.) 
+On the 1st day of work, the manager or HR will invite the employee to all team-specific accounts.
 
-- send email (to, subject, body, cc and bcc fields)
-- search for emails
-- get email content
-- move email (Identifying an e-mail and moving it into a folder, including trash (delete))
-- create draft emails
-
-## Prompts
-
-```
-Send email to x@y.com and y@x.com, subject "process these files" and
-body "message content sent from the Sema4Desktop v0.0.26"
-```
-
-> The email has been successfully sent to x@y.com and y@x.com with the
-> subject "process these files" and the specified body content. If there's anything else you
-> need, let me know!
-
-```
-How many emails I have from ReleaseNotes ?
-```
-
-> You have received 7 emails from "ReleaseNotes." If you need more details about these emails or any
-> other assistance, feel free to ask!
-
-```
-Move all of them to trash.
-```
-
-> All emails from "ReleaseNotes" have been moved to the trash. If there's anything else you need, just let me know!
-
-```
-Send email to recipient@domain.com, I finally got rid of those pesky ReleaseNotes emails. Add into the email body
-the subject and dates of those emails. Include also the count of how many emails were moved.
-```
-
-> The email has been sent to recipient@domain.com, summarizing the details of the ReleaseNotes emails that
-> were moved to the trash, including their subjects, dates, and the total count. If you need further assistance,
-> feel free to ask!
-
-## Authorization
-
-This action package uses Google OAuth2 flow to authenticate user.
-
-Scopes in use:
-
-    - https://www.googleapis.com/auth/gmail.send
-    - https://www.googleapis.com/auth/gmail.readonly
-    - https://www.googleapis.com/auth/gmail.modify
+## The solution 💡
+Onboarding Agent, which works by command, first creates a Gsuite account, sends an invitation to a new employee's personal email, and then grants other needed access to the internal systems/accounts.
