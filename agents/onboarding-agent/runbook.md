@@ -1,4 +1,4 @@
-#Onboarding new employee steps
+# Onboarding new employee steps
 
 1. Create a Gsuite account for the new employee by using the given primary email, first name, and last name. Before sending an invite, ask if you should send it.
 2. Ask for the employee's personal email (personal email is not sema4.ai address) and ask if you should send them a login invitation via email (don't include password to the draft) 
