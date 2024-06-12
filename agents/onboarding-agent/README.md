@@ -1,4 +1,4 @@
-# Google Mail
+# Onboarding Agent
 
 Action Package interacting with Google Mail (GMail) resources.
 
